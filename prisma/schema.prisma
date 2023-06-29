@@ -31,7 +31,7 @@ model friends {
 model posts {
   id           String     @id @db.Uuid
   user_id      String     @db.Uuid
-  context      String     @db.VarChar
+  content      String     @db.VarChar
   tags         String?    @db.VarChar
   visibility   Int?       @default(0) @db.SmallInt
   published_at DateTime   @default(now()) @db.Timestamp(6)
@@ -54,6 +54,7 @@ model users {
   email                            String      @unique @db.VarChar
   telephone                        String?     @db.VarChar
   birth_date                       String      @db.VarChar
+  password                         String      @db.VarChar
   avatar_url                       String?     @db.VarChar
   created_at                       DateTime    @default(now()) @db.Timestamp(6)
   comments                         comments[]

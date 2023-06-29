@@ -1,7 +1,15 @@
-class CreateUserUserCase {
-  async execute() {
-    console.log("Executando regra de negócio!");
-  }
+import { IRequestCreateUser } from "../../dto/users";
+
+class CreateUserUseCase {
+  async execute({
+    name, 
+    email,
+    confirmEmail,
+    password,
+    confirmPasword,
+    telephone,
+    birthDate
+  } : IRequestCreateUser) {}
 }
 
-export { CreateUserUserCase }
+export { CreateUserUseCase }

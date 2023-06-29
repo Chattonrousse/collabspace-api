@@ -1,13 +1,34 @@
 import { Request, Response } from "express";
-import { CreateUserUserCase } from "./createUserUseCase";
+import { CreateUserUseCase } from "./createUserUseCase";
+import { IRequestCreateUser } from "../../dto/users";
 
 class CreateUserController {
-  async handle(req: Request, res: Response) {
-    const createUserUserCase = new CreateUserUserCase();
+  async handle(request: Request, response: Response) {
+    const { 
+      name, 
+      email,
+      confirmEmail,
+      password,
+      confirmPasword,
+      telephone,
+      birthDate
+    } = request.body as IRequestCreateUser;
 
-    createUserUserCase.execute();
+    console.log();
 
-    res.json ({ msg: "Olá Mundo!"});
+    const createUserCase = new CreateUserUseCase();
+
+    const result = await createUserCase.execute({
+      name, 
+      email,
+      confirmEmail,
+      password,
+      confirmPasword,
+      telephone,
+      birthDate
+    });
+
+    response.json ({ msg: "Olá Mundo!"});
   }
 }
 
