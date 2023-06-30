@@ -9,7 +9,7 @@ class CreateUserController {
       email,
       confirmEmail,
       password,
-      confirmPasword,
+      confirmPassword,
       telephone,
       birthDate
     } = request.body as IRequestCreateUser;
@@ -23,12 +23,12 @@ class CreateUserController {
       email,
       confirmEmail,
       password,
-      confirmPasword,
+      confirmPassword,
       telephone,
       birthDate
     });
 
-    response.json ({ msg: "Olá Mundo!"});
+    response.json (result);
   }
 }
 

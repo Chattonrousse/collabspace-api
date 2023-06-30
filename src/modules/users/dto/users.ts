@@ -14,7 +14,7 @@ interface IRequestCreateUser {
   email: string;
   confirmEmail: string;
   password: string;
-  confirmPasword: string;
+  confirmPassword: string;
   telephone: string | null;
   birthDate: string;
 }
@@ -23,10 +23,10 @@ interface ICreateUser {
   id: string;
   name: string;
   email: string;
-  telephone: string;
+  telephone?: string | null;
   birthDate: string;
   password: string;
-  avatarUrl: string;
+  avatarUrl?: string;
 }
 
 export { IUser, ICreateUser, IRequestCreateUser };
