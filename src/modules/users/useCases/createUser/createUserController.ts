@@ -5,14 +5,14 @@ import { IRequestCreateUser } from "../../dto/users";
 
 class CreateUserController {
   async handle(request: Request, response: Response) {
-    const { 
-      name, 
+    const {
+      name,
       email,
       confirmEmail,
       password,
       confirmPassword,
       telephone,
-      birthDate
+      birthDate,
     } = request.body as IRequestCreateUser;
 
     console.log();
@@ -20,16 +20,16 @@ class CreateUserController {
     const createUserCase = container.resolve(CreateUserUseCase);
 
     const result = await createUserCase.execute({
-      name, 
+      name,
       email,
       confirmEmail,
       password,
       confirmPassword,
       telephone,
-      birthDate
+      birthDate,
     });
 
-    response.status(result.statusCode).json(result);
+    return response.status(result.statusCode).json(result);
   }
 }
 
