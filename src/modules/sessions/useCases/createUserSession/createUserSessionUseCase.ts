@@ -1,7 +1,7 @@
 import { AppError } from "@helpers/errorsHandler";
 import { AppResponse } from "@helpers/responseParser";
 import { sign } from "jsonwebtoken";
-import { IRequestCreateUserSession } from "@modules/sessions/dto/sessions";
+import { IRequestCreateUserSession } from "@modules/sessions/dtos/sessions";
 import { IUsersRepositories } from "@modules/users/iRepositories/IUsersRepositories";
 import { IBcryptProvider } from "@shared/container/providers/bcryptProvider/IBcryptProvider";
 import { inject, injectable } from "tsyringe";
@@ -32,7 +32,7 @@ class CreateUserSessionUseCase {
       listUserByEmail.password
     );
 
-    if (listUserByEmail.active) {
+    if (!listUserByEmail.active) {
       throw new AppError({
         message: "Usuário Inativo",
       });

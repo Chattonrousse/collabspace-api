@@ -1,23 +1,23 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from "express";
 import "express-async-errors";
-import cors from 'cors';
-import helmet from 'helmet';
-import dotenv from 'dotenv';
+import cors from "cors";
+import helmet from "helmet";
+import dotenv from "dotenv";
 
 import "reflect-metadata";
 import "./container";
 
 import { router } from "@routes/index";
-import { AppError } from '@helpers/errorsHandler';
+import { AppError } from "@helpers/errorsHandler";
 
-dotenv.config()
+dotenv.config();
 
-const app = express ()
+const app = express();
 
-app.use(cors())
-app.use(helmet())
-app.use(express.json())
-app.use(express.json({ limit: process.env.MAX_REQUEST_SIZE }))
+app.use(cors());
+app.use(helmet());
+app.use(express.json());
+app.use(express.json({ limit: process.env.MAX_REQUEST_SIZE }));
 
 app.use(router);
 
@@ -32,9 +32,9 @@ app.use(
     }
     return response.status(500).json({
       result: "Error",
-      message: `Internal server Error - ${err.message}`
+      message: `Internal server Error - ${err.message}`,
     });
   }
-)
+);
 
-export { app }
+export { app };
