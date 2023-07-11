@@ -4,9 +4,11 @@ import { ListAllPostsUseCase } from "./listAllPostsUseCase";
 
 class ListAllPostsController {
   async handle(request: Request, response: Response) {
+    const { page, limit } = request.query as { page: string; limit: string };
+
     const listAllPostsUseCase = container.resolve(ListAllPostsUseCase);
 
-    const result = await listAllPostsUseCase.execute();
+    const result = await listAllPostsUseCase.execute({ page, limit });
 
     return response.status(result.statusCode).json(result);
   }

@@ -1,6 +1,6 @@
 import { prisma } from "@libs/prismaClient";
 import { IPostsRepositories } from "../iRepositories/IPostsRepositories";
-import { ICreatePost, IPost } from "../dtos/posts";
+import { ICreatePost, IListAllPosts, IPost } from "../dtos/posts";
 
 class PostRepository implements IPostsRepositories {
   create({
@@ -21,15 +21,24 @@ class PostRepository implements IPostsRepositories {
     });
   }
 
-  listAll(): Promise<IPost[]> {
+  listAll(page: number, limit: number): Promise<IListAllPosts[]> {
     return prisma.posts.findMany({
+      skip: page * limit,
+      take: limit,
       select: {
         id: true,
-        user_id: true,
+        user_id: false,
         content: true,
         tags: true,
         visibility: true,
         published_at: true,
+        users: {
+          select: {
+            id: true,
+            name: true,
+            avatar_url: true,
+          },
+        },
       },
     });
   }

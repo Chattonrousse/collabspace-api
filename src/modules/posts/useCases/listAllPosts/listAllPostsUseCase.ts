@@ -2,6 +2,11 @@ import { AppResponse } from "@helpers/responseParser";
 import { IPostsRepositories } from "@modules/posts/iRepositories/IPostsRepositories";
 import { inject, injectable } from "tsyringe";
 
+interface IRequest {
+  page: string;
+  limit: string;
+}
+
 @injectable()
 class ListAllPostsUseCase {
   constructor(
@@ -9,8 +14,24 @@ class ListAllPostsUseCase {
     private PostRepository: IPostsRepositories
   ) {}
 
-  async execute(): Promise<AppResponse> {
-    const posts = await this.PostRepository.listAll();
+  async execute({ page, limit }: IRequest): Promise<AppResponse> {
+    const listAll = await this.PostRepository.listAll(
+      Number(page) || 0,
+      Number(limit) || 10
+    );
+
+    const posts = listAll.map((post) => ({
+      id: post.id,
+      content: post.content,
+      tags: post.tags,
+      visibility: post.visibility,
+      published_at: post.published_at,
+      user: {
+        id: post.users.id,
+        name: post.users.name,
+        avatar_url: post.users.avatar_url,
+      },
+    }));
 
     return new AppResponse({
       message: "Posts istados com sucesso!",
