@@ -1,0 +1,3 @@
+class CreateCommentController {}
+
+export { CreateCommentController };
