@@ -1,13 +1,14 @@
 import express, { NextFunction, Request, Response } from "express";
 import "express-async-errors";
 import cors from "cors";
-import helmet from "helmet";
 import dotenv from "dotenv";
+import helmet from "helmet";
 
 import "reflect-metadata";
 import "./container";
 
 import { router } from "@routes/index";
+
 import { AppError } from "@helpers/errorsHandler";
 
 dotenv.config();
@@ -30,11 +31,23 @@ app.use(
         message: err.message,
       });
     }
+
     return response.status(500).json({
-      result: "Error",
-      message: `Internal server Error - ${err.message}`,
+      result: "error",
+      message: `Internal server error - ${err.message}`,
     });
   }
 );
 
 export { app };
+
+/* 
+  REQUEST -> 
+    ROUTES -> 
+      MIDDLEWARE ->
+        CONTROLLER(RESPONSE) <-> 
+          USECASE <-> 
+            REPOSITORY <-> 
+              PRISMA <-> 
+                DATABASE
+*/

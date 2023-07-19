@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
 import { container } from "tsyringe";
-import { InactivateUserUseCase } from "./InactivateUserUseCase";
+import { Request, Response } from "express";
+import { InactivateUserUseCase } from "./inactivateUserUseCase";
 
 class InactivateUserController {
   async handle(request: Request, response: Response) {

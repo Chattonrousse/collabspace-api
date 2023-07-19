@@ -1,3 +1,0 @@
-class CreateCommentController {}
-
-export { CreateCommentController };

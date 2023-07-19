@@ -1,8 +1,8 @@
 import { Router } from "express";
 
 import { CreateUserController } from "@modules/users/useCases/createUser/createUserController";
-import { UpdateUserController } from "@modules/users/useCases/updateUsers/updateUserController";
-import { InactivateUserController } from "@modules/users/useCases/inactivateUser/InactivateUserController";
+import { UpdateUserController } from "@modules/users/useCases/updateUser/updateUserController";
+import { InactivateUserController } from "@modules/users/useCases/inactivateUser/inactivateUserController";
 
 import { authentication } from "src/middlewares/authentication";
 

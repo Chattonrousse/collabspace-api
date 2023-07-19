@@ -2,17 +2,17 @@ import "./providers";
 import { container } from "tsyringe";
 
 import { IUsersRepositories } from "@modules/users/iRepositories/IUsersRepositories";
-import { UserRespository } from "@modules/users/repositories/UserRepository";
-import { PostRepository } from "@modules/posts/repositores/PostRepository";
+import { UserRepository } from "@modules/users/repositories/UserRepository";
 import { IPostsRepositories } from "@modules/posts/iRepositories/IPostsRepositories";
-import { CommentRepository } from "@modules/comments/repositories/CommentRepoitory";
+import { PostRepository } from "@modules/posts/repositories/PostRepository";
 import { ICommentsRepositories } from "@modules/comments/iRepositories/ICommentsRepositories";
-
-console.log(UserRespository);
+import { CommentRepository } from "@modules/comments/repositories/CommentRepository";
+import { IReactionsRepositories } from "@modules/reactions/iRepositories/IReactionsRepositories";
+import { ReactionRepository } from "@modules/reactions/repositories/ReactionRepository";
 
 container.registerSingleton<IUsersRepositories>(
   "UserRepository",
-  UserRespository
+  UserRepository
 );
 
 container.registerSingleton<IPostsRepositories>(
@@ -21,6 +21,11 @@ container.registerSingleton<IPostsRepositories>(
 );
 
 container.registerSingleton<ICommentsRepositories>(
-  "CommentsRepository",
+  "CommentRepository",
   CommentRepository
+);
+
+container.registerSingleton<IReactionsRepositories>(
+  "ReactionRepository",
+  ReactionRepository
 );

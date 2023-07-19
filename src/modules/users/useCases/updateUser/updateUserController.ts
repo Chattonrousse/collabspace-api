@@ -8,9 +8,9 @@ class UpdateUserController {
     const id = request.usrId;
     const { name, telephone, birthDate } = request.body as IRequestUpdateUser;
 
-    const updateUserUseCase = container.resolve(UpdateUserUseCase);
+    const updateUseCase = container.resolve(UpdateUserUseCase);
 
-    const result = await updateUserUseCase.execute({
+    const result = await updateUseCase.execute({
       id,
       name,
       telephone,

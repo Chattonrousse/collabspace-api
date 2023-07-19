@@ -1,10 +1,10 @@
-import { AppError } from "@helpers/errorsHandler";
-import { AppResponse } from "@helpers/responseParser";
+import { inject, injectable } from "tsyringe";
 import { sign } from "jsonwebtoken";
+import { AppResponse } from "@helpers/responseParser";
 import { IRequestCreateUserSession } from "@modules/sessions/dtos/sessions";
 import { IUsersRepositories } from "@modules/users/iRepositories/IUsersRepositories";
+import { AppError } from "@helpers/errorsHandler";
 import { IBcryptProvider } from "@shared/container/providers/bcryptProvider/IBcryptProvider";
-import { inject, injectable } from "tsyringe";
 
 @injectable()
 class CreateUserSessionUseCase {
@@ -27,16 +27,16 @@ class CreateUserSessionUseCase {
       });
     }
 
+    if (!listUserByEmail.active) {
+      throw new AppError({
+        message: "Usuário inativo!",
+      });
+    }
+
     const passwordMatch = await this.bcryptProvider.checkPassword(
       password,
       listUserByEmail.password
     );
-
-    if (!listUserByEmail.active) {
-      throw new AppError({
-        message: "Usuário Inativo",
-      });
-    }
 
     if (!passwordMatch) {
       throw new AppError({
@@ -54,16 +54,16 @@ class CreateUserSessionUseCase {
     });
 
     return new AppResponse({
-      message: "Usuário logad com sucesso!",
+      message: "Usuário logado com sucesso!",
       data: {
         token,
         user: {
           id: listUserByEmail.id,
           name: listUserByEmail.name,
-          emai: listUserByEmail.email,
+          email: listUserByEmail.email,
           telephone: listUserByEmail.telephone,
           birthDate: listUserByEmail.birth_date,
-          avatarURL: listUserByEmail.avatar_url,
+          avatarUrl: listUserByEmail.avatar_url,
           createdAt: listUserByEmail.created_at,
         },
       },

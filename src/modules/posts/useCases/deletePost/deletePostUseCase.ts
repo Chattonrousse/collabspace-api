@@ -1,8 +1,8 @@
-import { AppError } from "@helpers/errorsHandler";
-import { AppResponse } from "@helpers/responseParser";
+import { inject, injectable } from "tsyringe";
 import { IPostsRepositories } from "@modules/posts/iRepositories/IPostsRepositories";
 import { IUuidProvider } from "@shared/container/providers/uuidProvider/IUuidProvider";
-import { inject, injectable } from "tsyringe";
+import { AppResponse } from "@helpers/responseParser";
+import { AppError } from "@helpers/errorsHandler";
 
 interface IRequest {
   usrId: string;
@@ -21,7 +21,7 @@ class DeletePostUseCase {
   async execute({ usrId, id }: IRequest): Promise<AppResponse> {
     if (!this.uuidProvider.validateUUID(id)) {
       throw new AppError({
-        message: "ID é inválido",
+        message: "ID é inválido!",
       });
     }
 
@@ -43,7 +43,7 @@ class DeletePostUseCase {
     await this.postRepository.delete(id);
 
     return new AppResponse({
-      message: "Post deletado com sucesso",
+      message: "Post deletado com sucesso!",
     });
   }
 }

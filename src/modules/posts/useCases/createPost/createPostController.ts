@@ -1,7 +1,7 @@
 import { IRequestCreatePost } from "@modules/posts/dtos/posts";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import { CreatePostUseCase } from "./createPostUserUseCase";
+import { CreatePostUseCase } from "./createPostUseCase";
 
 class CreatePostController {
   async handle(request: Request, response: Response) {

@@ -20,7 +20,6 @@
       "@routes/*": ["./src/routes/*"],
       "@shared/*": ["./src/shared/*"],
       "@utils/*": ["./src/utils/*"],
-      
     }
   }
 }

@@ -38,9 +38,9 @@ interface IRequestUpdateUser {
 
 interface IUpdateUser {
   id: string;
-  name: string;
-  telephone: string | null;
-  birthDate: string;
+  name?: string;
+  telephone?: string | null;
+  birthDate?: string;
 }
 
 export {

@@ -1,7 +1,8 @@
-import { container } from "tsyringe";
 import { Request, Response } from "express";
+import { container } from "tsyringe";
+
 import { CreateUserUseCase } from "./createUserUseCase";
-import { IRequestCreateUser } from "../../dtos/users";
+import { IRequestCreateUser } from "@modules/users/dtos/users";
 
 class CreateUserController {
   async handle(request: Request, response: Response) {
@@ -14,8 +15,6 @@ class CreateUserController {
       telephone,
       birthDate,
     } = request.body as IRequestCreateUser;
-
-    console.log();
 
     const createUserCase = container.resolve(CreateUserUseCase);
 

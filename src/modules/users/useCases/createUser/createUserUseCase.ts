@@ -1,12 +1,12 @@
 import { inject, injectable } from "tsyringe";
 
 import { IRequestCreateUser } from "@modules/users/dtos/users";
-import { IUsersRepositories } from "@modules/users/iRepositories/IUsersRepositories";
 import { telephoneFormat } from "@utils/formatData";
 import { AppResponse } from "@helpers/responseParser";
 import { AppError } from "@helpers/errorsHandler";
+import { IUsersRepositories } from "@modules/users/iRepositories/IUsersRepositories";
 import { IUuidProvider } from "@shared/container/providers/uuidProvider/IUuidProvider";
-import { BcryptProvider } from "@shared/container/providers/bcryptProvider/Implementation/BcryptProvider";
+import { IBcryptProvider } from "@shared/container/providers/bcryptProvider/IBcryptProvider";
 
 @injectable()
 class CreateUserUseCase {
@@ -16,7 +16,7 @@ class CreateUserUseCase {
     @inject("UuidProvider")
     private uuidProvider: IUuidProvider,
     @inject("BcryptProvider")
-    private bcryptProvider: BcryptProvider
+    private bcryptProvider: IBcryptProvider
   ) {}
 
   async execute({
@@ -40,13 +40,13 @@ class CreateUserUseCase {
       )
     ) {
       throw new AppError({
-        message: "Senha fraca",
+        message: "Senha fraca!",
       });
     }
 
     if (email !== confirmEmail) {
       throw new AppError({
-        message: "Os e-mails não coincidem",
+        message: "Os e-mails não coincidem!",
       });
     }
 
@@ -54,7 +54,7 @@ class CreateUserUseCase {
 
     if (listUserByEmail) {
       throw new AppError({
-        message: "Usuário já cadastrado",
+        message: "Usuário já cadastrado!",
       });
     }
 

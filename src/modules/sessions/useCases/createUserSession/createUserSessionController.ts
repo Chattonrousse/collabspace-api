@@ -1,5 +1,5 @@
-import { IRequestCreateUserSession } from "@modules/sessions/dtos/sessions";
 import { Request, Response } from "express";
+import { IRequestCreateUserSession } from "@modules/sessions/dtos/sessions";
 import { container } from "tsyringe";
 import { CreateUserSessionUseCase } from "./createUserSessionUseCase";
 

@@ -3,7 +3,7 @@ import { prisma } from "@libs/prismaClient";
 import { ICreateUser, IUpdateUser, IUser } from "@modules/users/dtos/users";
 import { IUsersRepositories } from "@modules/users/iRepositories/IUsersRepositories";
 
-class UserRespository implements IUsersRepositories {
+class UserRepository implements IUsersRepositories {
   create({
     id,
     name,
@@ -57,4 +57,4 @@ class UserRespository implements IUsersRepositories {
   }
 }
 
-export { UserRespository };
+export { UserRepository };

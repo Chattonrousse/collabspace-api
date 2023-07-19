@@ -36,7 +36,7 @@ class UpdateUserUseCase {
 
     if (!listUserById) {
       throw new AppError({
-        message: "Usuário não encontrado",
+        message: "Usuário não encontrado!",
       });
     }
 

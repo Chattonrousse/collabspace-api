@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { ICommentsRepositories } from "../iRepositories/ICommentsRepositories";
+import { IRequestCreateComment } from "@modules/comments/dtos/comments";
+import { ICommentsRepositories } from "@modules/comments/iRepositories/ICommentsRepositories";
 import { IPostsRepositories } from "@modules/posts/iRepositories/IPostsRepositories";
 import { IUuidProvider } from "@shared/container/providers/uuidProvider/IUuidProvider";
-import { IRequestCreateComment } from "../dtos/comments";
 import { AppResponse } from "@helpers/responseParser";
 import { AppError } from "@helpers/errorsHandler";
 
@@ -33,7 +33,7 @@ class CreateCommentUseCase {
 
     if (!listPostById) {
       throw new AppError({
-        message: "Post não encontrado!!",
+        message: "Post não encontrado!",
       });
     }
 

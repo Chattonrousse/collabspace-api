@@ -1,6 +1,6 @@
-import { IRequestUpdatePost } from "@modules/posts/dtos/posts";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
+import { IRequestUpdatePost } from "@modules/posts/dtos/posts";
 import { UpdatePostUseCase } from "./updatePostUseCase";
 
 class UpdatePostController {
