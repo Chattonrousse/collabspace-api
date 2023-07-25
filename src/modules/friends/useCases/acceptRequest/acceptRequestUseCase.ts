@@ -3,7 +3,7 @@ import { AppResponse } from "@helpers/responseParser";
 import { IFriendsRepositories } from "@modules/friends/iRepositories/IFriendsRepoitories";
 import { IUuidProvider } from "@shared/container/providers/uuidProvider/IUuidProvider";
 import { EnumFriendsActions } from "src/enums/friendsActions";
-import { inject, injectable } from "tsyringe";
+import { injectable, inject } from "tsyringe";
 
 interface IRequest {
   usrId: string;
@@ -11,7 +11,7 @@ interface IRequest {
 }
 
 @injectable()
-class CancelRequestUseCase {
+class AcceptRequestUseCase {
   constructor(
     @inject("FriendRepository")
     private friendRepository: IFriendsRepositories,
@@ -22,7 +22,7 @@ class CancelRequestUseCase {
   async execute({ usrId, id }: IRequest): Promise<AppResponse> {
     if (!this.uuidProvider.validateUUID(id)) {
       throw new AppError({
-        message: "ID inválido",
+        message: "ID inválido!",
       });
     }
 
@@ -34,32 +34,33 @@ class CancelRequestUseCase {
       });
     }
 
-    if (usrId !== listFriendById.user_id_1) {
+    if (usrId !== listFriendById.user_id_2) {
       throw new AppError({
-        statusCode: 402,
         message: "Operação não permitida!",
       });
     }
 
-    if (
-      listFriendById.action_id_2 === EnumFriendsActions.accepted ||
-      listFriendById.action_id_2 === EnumFriendsActions.refused
-    ) {
+    if (listFriendById.action_id_2 === EnumFriendsActions.accepted) {
       throw new AppError({
-        message: "Essa solicitação já foi aceita ou recusada.",
+        message: "Solicitação já aceita!",
+      });
+    }
+
+    if (listFriendById.action_id_1 !== EnumFriendsActions.requested) {
+      throw new AppError({
+        message: "Solicitação foi cancelada ou recusada!",
       });
     }
 
     await this.friendRepository.updateActionStatus({
       id,
-      actionId1: EnumFriendsActions.canceled,
-      actionId2: null,
+      actionId2: EnumFriendsActions.accepted,
     });
 
     return new AppResponse({
-      message: "Solicitação cancelada",
+      message: "Solicitação aceita!",
     });
   }
 }
 
-export { CancelRequestUseCase };
+export { AcceptRequestUseCase };
