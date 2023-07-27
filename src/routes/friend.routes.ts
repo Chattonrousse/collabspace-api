@@ -3,6 +3,7 @@ import { CancelRequestController } from "@modules/friends/useCases/cancelRequest
 import { CreateFriendController } from "@modules/friends/useCases/createFriend/createFriendController";
 import { DeleteFriendController } from "@modules/friends/useCases/deleteFriend/deleteFriendController";
 import { ListAllFriendsByUserController } from "@modules/friends/useCases/getAllFriendsByUser/listAllFriendsByUserController";
+import { ListAllRequestsByUserController } from "@modules/friends/useCases/getAlllRequestByUser/listAllRequestsByUserController";
 import { RecuseRequestController } from "@modules/friends/useCases/recuseRquest/recuseRequestController";
 
 import { Router } from "express";
@@ -16,6 +17,11 @@ friendRoutes.use(authentication);
 friendRoutes.get(
   "/listAllFriends",
   new ListAllFriendsByUserController().handle
+);
+
+friendRoutes.get(
+  "/listAllRequests",
+  new ListAllRequestsByUserController().handle
 );
 
 friendRoutes.post("/:targetId", new CreateFriendController().handle);
