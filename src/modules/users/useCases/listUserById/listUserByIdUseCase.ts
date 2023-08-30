@@ -26,10 +26,19 @@ class ListUserByIdUseCase {
 
     const listUserById = await this.userRepository.listById(id);
 
+    const user = {
+      id: listUserById?.id,
+      name: listUserById?.name,
+      telephone: listUserById?.telephone,
+      birthDate: listUserById?.birth_date,
+      avatarUrl: listUserById?.avatar_url,
+      createdAt: listUserById?.created_at,
+    };
+
     return new AppResponse({
       message: "Usuário listado com sucesso!",
       data: {
-        user: listUserById,
+        user,
       },
     });
   }
