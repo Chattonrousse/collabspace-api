@@ -1,23 +1,33 @@
-import { AppResponse } from "@helpers/responseParser";
-import { IFriendsRepositories } from "@modules/friends/iRepositories/IFriendsRepoitories";
 import { inject, injectable } from "tsyringe";
+import { AppResponse } from "@helpers/responseParser";
+import { IFriendsRepositories } from "@modules/friends/iRepositories/IFriendsRepositories";
+import { IUuidProvider } from "@shared/container/providers/uuidProvider/IUuidProvider";
+import { AppError } from "@helpers/errorsHandler";
 
 interface IRequest {
-  usrId: string;
+  id: string;
 }
 
 @injectable()
 class ListAllFriendsByUserUseCase {
   constructor(
     @inject("FriendRepository")
-    private friendRepository: IFriendsRepositories
+    private friendRepository: IFriendsRepositories,
+    @inject("UuidProvider")
+    private uuidProvider: IUuidProvider
   ) {}
 
-  async execute({ usrId }: IRequest): Promise<AppResponse> {
-    const listAllFriendsByUser =
-      await this.friendRepository.listAllFriendsByUser(usrId);
+  async execute({ id }: IRequest): Promise<AppResponse> {
+    if (!this.uuidProvider.validateUUID(id)) {
+      throw new AppError({
+        message: "ID inválido!",
+      });
+    }
 
-    const friends = await listAllFriendsByUser.map((friend) => {
+    const listAllFriendsByUser =
+      await this.friendRepository.listAllFriendsByUser(id);
+
+    const friends = listAllFriendsByUser.map((friend) => {
       return {
         id: friend.id,
         user1: {
@@ -37,10 +47,7 @@ class ListAllFriendsByUserUseCase {
     return new AppResponse({
       message: "Amizades listadas com sucesso!",
       data: {
-        listAllFriendsByUser,
-        data: {
-          friends,
-        },
+        friends,
       },
     });
   }

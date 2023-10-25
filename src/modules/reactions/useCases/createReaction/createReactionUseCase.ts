@@ -45,7 +45,7 @@ class CreateReactionUseCase {
     if (postId) {
       if (!this.uuidProvider.validateUUID(postId)) {
         throw new AppError({
-          message: "PostID é inválido!",
+          message: "PostID inválido!",
         });
       }
 
@@ -61,7 +61,7 @@ class CreateReactionUseCase {
     if (commentId) {
       if (!this.uuidProvider.validateUUID(commentId)) {
         throw new AppError({
-          message: "CommentID é inválido!",
+          message: "CommentID inválido!",
         });
       }
 
@@ -85,7 +85,7 @@ class CreateReactionUseCase {
       (commentId && countReactionUserComment)
     ) {
       throw new AppError({
-        message: " Você já reagiu a isto!",
+        message: "Você já reagiu a isto!",
       });
     }
 
@@ -103,10 +103,14 @@ class CreateReactionUseCase {
       data: {
         id: createReaction.id,
         userId: createReaction.user_id,
-        postId: createReaction.post_id,
-        commentId: createReaction.comment_id,
         entityType: createReaction.entity_type,
         reactedAt: createReaction.reacted_at,
+        user: {
+          id: createReaction.users?.id,
+          name: createReaction.users?.name,
+          email: createReaction.users?.email,
+          avatarUrl: createReaction.users?.avatar_url,
+        },
       },
     });
   }

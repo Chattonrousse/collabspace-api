@@ -1,9 +1,9 @@
+import { inject, injectable } from "tsyringe";
 import { AppError } from "@helpers/errorsHandler";
 import { AppResponse } from "@helpers/responseParser";
-import { IFriendsRepositories } from "@modules/friends/iRepositories/IFriendsRepoitories";
+import { IFriendsRepositories } from "@modules/friends/iRepositories/IFriendsRepositories";
 import { IUuidProvider } from "@shared/container/providers/uuidProvider/IUuidProvider";
-import { EnumFriendsActions } from "src/enums/friendsActions";
-import { inject, injectable } from "tsyringe";
+import { EnumFriendActions } from "src/enums/friendActions";
 
 interface IRequest {
   usrId: string;
@@ -22,7 +22,7 @@ class CancelRequestUseCase {
   async execute({ usrId, id }: IRequest): Promise<AppResponse> {
     if (!this.uuidProvider.validateUUID(id)) {
       throw new AppError({
-        message: "ID inválido",
+        message: "ID inválido!",
       });
     }
 
@@ -36,28 +36,28 @@ class CancelRequestUseCase {
 
     if (usrId !== listFriendById.user_id_1) {
       throw new AppError({
-        statusCode: 402,
+        statusCode: 401,
         message: "Operação não permitida!",
       });
     }
 
     if (
-      listFriendById.action_id_2 === EnumFriendsActions.accepted ||
-      listFriendById.action_id_2 === EnumFriendsActions.refused
+      listFriendById.action_id_2 === EnumFriendActions.accepted ||
+      listFriendById.action_id_2 === EnumFriendActions.refused
     ) {
       throw new AppError({
-        message: "Essa solicitação já foi aceita ou recusada.",
+        message: "Essa solicitação já foi aceita ou recusada!",
       });
     }
 
     await this.friendRepository.updateActionStatus({
       id,
-      actionId1: EnumFriendsActions.canceled,
+      actionId1: EnumFriendActions.canceled,
       actionId2: null,
     });
 
     return new AppResponse({
-      message: "Solicitação cancelada",
+      message: "Solicitação cancelada!",
     });
   }
 }

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { DeleteReactionUseCase } from "./deleteReactionUseCase";
 import { container } from "tsyringe";
+import { DeleteReactionUseCase } from "./deleteReactionUseCase";
 
 class DeleteReactionController {
   async handle(request: Request, response: Response) {

@@ -25,10 +25,11 @@ class UpdateUserUseCase {
     name,
     telephone,
     birthDate,
+    bio,
   }: IRequest): Promise<AppResponse> {
     if (!this.uuidProvider.validateUUID(id)) {
       throw new AppError({
-        message: "ID é inválido!",
+        message: "ID inválido!",
       });
     }
 
@@ -45,6 +46,7 @@ class UpdateUserUseCase {
       name,
       telephone: telephoneFormat(telephone),
       birthDate,
+      bio,
     });
 
     return new AppResponse({

@@ -6,8 +6,8 @@ import {
   IListAllRequestsByUser,
   IUpdateActionStatus,
 } from "../dtos/friends";
-import { IFriendsRepositories } from "../iRepositories/IFriendsRepoitories";
-import { EnumFriendsActions } from "src/enums/friendsActions";
+import { IFriendsRepositories } from "../iRepositories/IFriendsRepositories";
+import { EnumFriendActions } from "src/enums/friendActions";
 
 class FriendRepository implements IFriendsRepositories {
   create({ id, userId1, userId2 }: ICreateFriend): Promise<IFriend> {
@@ -48,10 +48,10 @@ class FriendRepository implements IFriendsRepositories {
         ],
         AND: [
           {
-            action_id_1: EnumFriendsActions.requested,
+            action_id_1: EnumFriendActions.requested,
           },
           {
-            action_id_2: EnumFriendsActions.accepted,
+            action_id_2: EnumFriendActions.accepted,
           },
         ],
       },
@@ -82,10 +82,10 @@ class FriendRepository implements IFriendsRepositories {
         user_id_2: id,
         AND: [
           {
-            action_id_1: EnumFriendsActions.requested,
+            action_id_1: EnumFriendActions.requested,
           },
           {
-            action_id_2: EnumFriendsActions.accepted,
+            action_id_2: null,
           },
         ],
       },

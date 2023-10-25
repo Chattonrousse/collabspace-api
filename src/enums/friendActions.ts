@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-export enum EnumFriendsActions {
+export enum EnumFriendActions {
   requested = 1,
   canceled = 2,
   accepted = 3,

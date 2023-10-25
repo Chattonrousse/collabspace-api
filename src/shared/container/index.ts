@@ -9,7 +9,7 @@ import { ICommentsRepositories } from "@modules/comments/iRepositories/IComments
 import { CommentRepository } from "@modules/comments/repositories/CommentRepository";
 import { IReactionsRepositories } from "@modules/reactions/iRepositories/IReactionsRepositories";
 import { ReactionRepository } from "@modules/reactions/repositories/ReactionRepository";
-import { IFriendsRepositories } from "@modules/friends/iRepositories/IFriendsRepoitories";
+import { IFriendsRepositories } from "@modules/friends/iRepositories/IFriendsRepositories";
 import { FriendRepository } from "@modules/friends/repositories/FriendRepository";
 
 container.registerSingleton<IUsersRepositories>(

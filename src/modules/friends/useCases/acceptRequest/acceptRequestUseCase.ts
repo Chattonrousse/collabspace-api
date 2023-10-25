@@ -1,9 +1,9 @@
+import { inject, injectable } from "tsyringe";
 import { AppError } from "@helpers/errorsHandler";
 import { AppResponse } from "@helpers/responseParser";
-import { IFriendsRepositories } from "@modules/friends/iRepositories/IFriendsRepoitories";
+import { IFriendsRepositories } from "@modules/friends/iRepositories/IFriendsRepositories";
 import { IUuidProvider } from "@shared/container/providers/uuidProvider/IUuidProvider";
-import { EnumFriendsActions } from "src/enums/friendsActions";
-import { injectable, inject } from "tsyringe";
+import { EnumFriendActions } from "src/enums/friendActions";
 
 interface IRequest {
   usrId: string;
@@ -41,13 +41,13 @@ class AcceptRequestUseCase {
       });
     }
 
-    if (listFriendById.action_id_2 === EnumFriendsActions.accepted) {
+    if (listFriendById.action_id_2 === EnumFriendActions.accepted) {
       throw new AppError({
         message: "Solicitação já aceita!",
       });
     }
 
-    if (listFriendById.action_id_1 !== EnumFriendsActions.requested) {
+    if (listFriendById.action_id_1 !== EnumFriendActions.requested) {
       throw new AppError({
         message: "Solicitação foi cancelada ou recusada!",
       });
@@ -55,7 +55,7 @@ class AcceptRequestUseCase {
 
     await this.friendRepository.updateActionStatus({
       id,
-      actionId2: EnumFriendsActions.accepted,
+      actionId2: EnumFriendActions.accepted,
     });
 
     return new AppResponse({

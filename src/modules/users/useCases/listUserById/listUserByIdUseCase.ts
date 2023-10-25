@@ -1,6 +1,6 @@
-import { AppResponse } from "@helpers/responseParser";
 import { inject, injectable } from "tsyringe";
 import { AppError } from "@helpers/errorsHandler";
+import { AppResponse } from "@helpers/responseParser";
 import { IUsersRepositories } from "@modules/users/iRepositories/IUsersRepositories";
 import { IUuidProvider } from "@shared/container/providers/uuidProvider/IUuidProvider";
 
@@ -20,7 +20,7 @@ class ListUserByIdUseCase {
   async execute({ id }: IRequest): Promise<AppResponse> {
     if (!this.uuidProvider.validateUUID(id)) {
       throw new AppError({
-        message: "ID inválido",
+        message: "ID inválido!",
       });
     }
 
@@ -33,6 +33,8 @@ class ListUserByIdUseCase {
       telephone: listUserById?.telephone,
       birthDate: listUserById?.birth_date,
       avatarUrl: listUserById?.avatar_url,
+      coverUrl: listUserById?.cover_url,
+      bio: listUserById?.bio,
       createdAt: listUserById?.created_at,
     };
 

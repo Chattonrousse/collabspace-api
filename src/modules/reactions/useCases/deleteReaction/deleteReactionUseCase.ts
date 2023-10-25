@@ -1,8 +1,8 @@
-import { AppError } from "@helpers/errorsHandler";
-import { AppResponse } from "@helpers/responseParser";
+import { inject, injectable } from "tsyringe";
 import { IReactionsRepositories } from "@modules/reactions/iRepositories/IReactionsRepositories";
 import { IUuidProvider } from "@shared/container/providers/uuidProvider/IUuidProvider";
-import { inject, injectable } from "tsyringe";
+import { AppResponse } from "@helpers/responseParser";
+import { AppError } from "@helpers/errorsHandler";
 
 interface IRequest {
   usrId: string;
@@ -12,16 +12,16 @@ interface IRequest {
 @injectable()
 class DeleteReactionUseCase {
   constructor(
-    @inject("ReactionRepsitory")
+    @inject("ReactionRepository")
     private reactionRepository: IReactionsRepositories,
     @inject("UuidProvider")
-    private uuidorvider: IUuidProvider
+    private uuidProvider: IUuidProvider
   ) {}
 
   async execute({ usrId, id }: IRequest): Promise<AppResponse> {
-    if (!this.uuidorvider.validateUUID(id)) {
+    if (!this.uuidProvider.validateUUID(id)) {
       throw new AppError({
-        message: "ID é inválido",
+        message: "ID é invalido!",
       });
     }
 
@@ -36,15 +36,14 @@ class DeleteReactionUseCase {
     if (usrId !== listReactionById.user_id) {
       throw new AppError({
         statusCode: 401,
-
-        message: "Operação não permitida!",
+        message: "Operaçao não permitida!",
       });
     }
 
     await this.reactionRepository.delete(id);
 
     return new AppResponse({
-      message: "Reação removida com suceso!",
+      message: "Reação removida com sucesso!",
     });
   }
 }
