@@ -6,6 +6,7 @@ import { postRoutes } from "./post.routes";
 import { commentRoutes } from "./comment.routes";
 import { reactionRoutes } from "./reaction.routes";
 import { friendRoutes } from "./friend.routes";
+import { addressRoutes } from "./address";
 
 const router = Router();
 
@@ -15,5 +16,6 @@ router.use("/posts", postRoutes);
 router.use("/comments", commentRoutes);
 router.use("/reactions", reactionRoutes);
 router.use("/friends", friendRoutes);
+router.use("/address", addressRoutes);
 
 export { router };
