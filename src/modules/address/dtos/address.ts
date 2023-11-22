@@ -8,18 +8,27 @@ interface IAddress {
   street: string | null;
 }
 
-interface IRequestCreateAddress {
-  cep: string | null;
-  country: string;
-  province: string;
-  city: string;
-  street: string;
-}
-
 interface ICreateAddress {
   id: string;
   userId: string;
-  cep?: string | null;
+  cep?: string;
+  country?: string;
+  province?: string;
+  city?: string;
+  street?: string;
+}
+
+interface IRequestCreateAddress {
+  cep?: string;
+  country?: string;
+  province?: string;
+  city?: string;
+  street?: string;
+}
+
+interface IUpdateAddress {
+  id: string;
+  cep?: string;
   country?: string;
   province?: string;
   city?: string;
@@ -27,26 +36,17 @@ interface ICreateAddress {
 }
 
 interface IRequestUpdateAddress {
-  cep: string;
-  country: string;
-  province: string;
-  city: string;
-  street: string;
-}
-
-interface IUpdateAddress {
-  id: string;
-  cep: string;
-  country: string;
-  province: string;
-  city: string;
-  street: string;
+  cep?: string;
+  country?: string;
+  province?: string;
+  city?: string;
+  street?: string;
 }
 
 export {
   IAddress,
-  IRequestCreateAddress,
   ICreateAddress,
-  IRequestUpdateAddress,
+  IRequestCreateAddress,
   IUpdateAddress,
+  IRequestUpdateAddress,
 };

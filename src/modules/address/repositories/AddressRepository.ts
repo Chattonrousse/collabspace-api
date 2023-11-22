@@ -6,8 +6,8 @@ class AddressRepository implements IAddressRepositories {
   create({
     id,
     userId,
-    cep,
     country,
+    cep,
     province,
     city,
     street,
@@ -16,8 +16,8 @@ class AddressRepository implements IAddressRepositories {
       data: {
         id,
         user_id: userId,
-        cep,
         country,
+        cep,
         province,
         city,
         street,
@@ -25,8 +25,8 @@ class AddressRepository implements IAddressRepositories {
       select: {
         id: true,
         user_id: true,
-        cep: true,
         country: true,
+        cep: true,
         province: true,
         city: true,
         street: true,
@@ -34,16 +34,25 @@ class AddressRepository implements IAddressRepositories {
     });
   }
 
-  listAddressById(id: string): Promise<IAddress | null> {
+  listById(id: string): Promise<IAddress | null> {
     return prisma.address.findFirst({
       where: { id },
+      select: {
+        id: true,
+        user_id: true,
+        country: true,
+        cep: true,
+        province: true,
+        city: true,
+        street: true,
+      },
     });
   }
 
   async update({
     id,
-    cep,
     country,
+    cep,
     province,
     city,
     street,
@@ -51,8 +60,8 @@ class AddressRepository implements IAddressRepositories {
     await prisma.address.update({
       where: { id },
       data: {
-        cep,
         country,
+        cep,
         province,
         city,
         street,

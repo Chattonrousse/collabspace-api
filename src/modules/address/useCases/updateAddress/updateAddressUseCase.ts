@@ -6,8 +6,8 @@ import { IUuidProvider } from "@shared/container/providers/uuidProvider/IUuidPro
 import { inject, injectable } from "tsyringe";
 
 interface IRequest extends IRequestUpdateAddress {
-  id: string;
   usrId: string;
+  id: string;
 }
 
 @injectable()
@@ -20,45 +20,46 @@ class UpdateAddressUseCase {
   ) {}
 
   async execute({
-    id,
     usrId,
-    cep,
+    id,
     country,
+    cep,
     province,
     city,
     street,
   }: IRequest): Promise<AppResponse> {
     if (!this.uuidProvider.validateUUID(id)) {
       throw new AppError({
-        message: "ID inválido!",
+        message: "ID é inválido!",
       });
     }
 
-    const listAddressById = await this.addressRepository.listAddressById(id);
+    const listById = await this.addressRepository.listById(id);
 
-    if (!listAddressById) {
+    if (!listById) {
       throw new AppError({
         message: "Endereço não encontrado!",
       });
     }
 
-    if (usrId !== listAddressById.user_id) {
+    if (usrId !== listById.user_id) {
       throw new AppError({
+        statusCode: 401,
         message: "Operação não permitida!",
       });
     }
 
     await this.addressRepository.update({
       id,
-      cep,
       country,
+      cep,
       province,
       city,
       street,
     });
 
     return new AppResponse({
-      message: "Endereço editado com sucesso!",
+      message: "Endereço atualizado com sucesso!",
     });
   }
 }

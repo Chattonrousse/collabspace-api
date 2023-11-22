@@ -1,3 +1,4 @@
+import { AppError } from "@helpers/errorsHandler";
 import { AppResponse } from "@helpers/responseParser";
 import { IRequestCreateAddress } from "@modules/address/dtos/address";
 import { IAddressRepositories } from "@modules/address/iRepositories/IAddressRepositories";
@@ -5,7 +6,7 @@ import { IUuidProvider } from "@shared/container/providers/uuidProvider/IUuidPro
 import { inject, injectable } from "tsyringe";
 
 interface IRequest extends IRequestCreateAddress {
-  usrId: string;
+  userId: string;
 }
 
 @injectable()
@@ -18,18 +19,24 @@ class CreateAddressUseCase {
   ) {}
 
   async execute({
-    usrId,
-    cep,
+    userId,
     country,
+    cep,
     province,
     city,
     street,
   }: IRequest): Promise<AppResponse> {
+    if (!this.uuidProvider.validateUUID(userId)) {
+      throw new AppError({
+        message: "User ID é inválido!",
+      });
+    }
+
     const createAddress = await this.addressRepository.create({
       id: this.uuidProvider.createUUID(),
-      userId: usrId,
-      cep,
+      userId,
       country,
+      cep,
       province,
       city,
       street,
@@ -37,12 +44,12 @@ class CreateAddressUseCase {
 
     return new AppResponse({
       statusCode: 201,
-      message: "Endereço criado com sucesso",
+      message: "Endereço criado com sucesso!",
       data: {
         id: createAddress.id,
         userId: createAddress.user_id,
-        cep: createAddress.cep,
         country: createAddress.country,
+        cep: createAddress.cep,
         province: createAddress.province,
         city: createAddress.city,
         street: createAddress.street,
@@ -50,4 +57,5 @@ class CreateAddressUseCase {
     });
   }
 }
+
 export { CreateAddressUseCase };
